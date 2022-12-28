@@ -1,0 +1,4 @@
+https://cdn.rawgit.com/banana-labo/webflow-japan/main/v1.js
+https://cdn.rawgit.com/banana-labo/webflow-japan/main/v1-min.js
+
+<script src="https://cdn.rawgit.com/banana-labo/webflow-japan/main/v1-min.js"></script>
