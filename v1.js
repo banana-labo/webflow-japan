@@ -53,6 +53,9 @@ $("body").on("click", function () {
         $("button").each(function () {
             $(this).is(':contains("Publish")') && $(this).text("公開");
         }),
+        $("button").each(function () {
+            $(this).is(':contains("Publish")') && $(this).text("公開");
+        }),
         $(".w-editor-bem-Pane_Title").each(function () {
             $(this).is(':contains("Collections")') && $(this).text("データベース一覧");
         }),
@@ -111,6 +114,190 @@ $("body").on("click", function () {
             })
             .each(function () {
                 this.textContent = this.textContent.replace("Not Published", "未公開");
+            }),
+            $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Mon", "月曜日");
+            }),
+            $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Tue", "火曜日");
+            }),
+            $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Wed", "水曜日");
+            }),
+            $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Thu", "木曜日");
+            }),
+            $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Fri", "金曜日");
+            }),
+            $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Sat", "土曜日");
+            }),
+            $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Sun", "日曜日");
+            }),
+            $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Jan", "1月");
+            }),
+            $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Feb", "2月");
+            }),
+            $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Mar", "3月");
+            }),
+            $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Apr", "4月");
+            }),
+            $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("May", "5月");
+            }),
+            $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Jun", "6月");
+            }),
+            $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Jul", "7月");
+            }),
+            $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Aug", "8月");
+            }),
+            $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Sep", "9月");
+            }),
+            $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Oct", "10月");
+            }),
+            $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Nov", "11月");
+            }),
+            $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Dec", "12月");
+            }),        
+        $(".w-editor-bem-View")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Pick a ", "関連");
+            }),
+        $("div")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("Drag your image here", "こちらに画像ファイルをドロップしてください。");
+            }),
+        $("div")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("or click to browse for a file", "または画像を選択してください");
+            }),
+        $(".w-editor-bem-Text")
+            .contents()
+            .filter(function () {
+                return this.nodeType == Node.TEXT_NODE;
+            })
+            .each(function () {
+                this.textContent = this.textContent.replace("New ", "【新規作成】");
             }),
         $(".w-editor-bem-Text")
             .contents()
@@ -173,7 +360,7 @@ $("body").on("click", function () {
         });
 });
 setTimeout(function () {
-    $(".w-editor-bem-EditorMainMenu_Tab-logout").click(
+    $(".w-editor-bem-EditorMainMenu_Tabs").click(
         function () {
             console.log("clicked...waiting...");
 
@@ -204,4 +391,4 @@ setTimeout(function () {
                 },
                 2000);
         });
-}, 5000);
+}, 2000);
