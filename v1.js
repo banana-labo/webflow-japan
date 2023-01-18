@@ -47,6 +47,7 @@ $("body").on("click", function () {
                 $(this).is(':contains("Deselect All")') && $(this).text("選択解除"),
                 $(this).is(':contains("Cancel")') && $(this).text("キャンセル"),
                 $(this).is(':contains("Save")') && $(this).text("保存"),
+                $(this).is(':contains("Create")') && $(this).text("作成"),
                 $(this).is(':contains("Deselect all")') && $(this).text("選択解除");
         }),
         $("button").each(function () {
