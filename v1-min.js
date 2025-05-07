@@ -1,3 +1,60 @@
+function observeJoinPanel(callback) {
+    const panelSelector = '.w-reset.w-editor-bem-EditorApp_Panel';
+    const panelRoot = document.querySelector(panelSelector);
+
+    if (panelRoot) {
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach(() => {
+                callback();
+            });
+        });
+        observer.observe(panelRoot, { childList: true, subtree: true });
+        console.log('✅ Observer attached to join panel');
+        callback(); // Run once initially
+    } else {
+        console.log('⏳ Waiting for join panel...');
+        setTimeout(() => observeJoinPanel(callback), 1000);
+    }
+}
+
+function replaceJoinPanelTranslations() {
+    console.log('🔔 Running replaceJoinPanelTranslations');
+
+    const textNodeMap = {
+        'First Name': '名',
+        'Last Name': '姓',
+        'Email': 'メールアドレス',
+        'Password': 'パスワード',
+        'Join now': '今すぐ参加',
+        'Join as a user in the Editor to start managing this website': 'このサイトを管理するには、ユーザーとしてEditorに参加してください',
+        'You will only access the Editor for this website.': 'このサイトのEditorのみにアクセスします。',
+        'Log in to manage your site.': 'ログインしてサイトを管理する'
+    };
+
+    document.querySelectorAll('div, span, label, button').forEach(el => {
+        el.childNodes.forEach(node => {
+            if (node.nodeType === Node.TEXT_NODE) {
+                let updatedText = node.textContent;
+                Object.keys(textNodeMap).forEach(key => {
+                    const regex = new RegExp(`\\b${key}\\b`, 'g');
+                    if (regex.test(updatedText)) {
+                        updatedText = updatedText.replace(regex, textNodeMap[key]);
+                        console.log(`✅ Replaced join panel text: ${key} → ${textNodeMap[key]}`);
+                    }
+                });
+                node.textContent = updatedText;
+            }
+        });
+    });
+}
+
+window.addEventListener('load', () => {
+    observeJoinPanel(() => {
+        replaceJoinPanelTranslations();
+    });
+});
+
+
 function translateEditButtonOnce() {
     const editButton = document.querySelector('.w-editor-bem-EditSiteButton');
     if (editButton) {
