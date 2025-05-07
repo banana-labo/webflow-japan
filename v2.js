@@ -1,4 +1,4 @@
-// --------- Debounce utility ---------
+// --------- Debounce utility ----------
 function debounce(func, wait) {
     let timeout;
     return function (...args) {
