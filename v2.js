@@ -1,4 +1,3 @@
-// --------- Debounce utility ----------
 function debounce(func, wait) {
     let timeout;
     return function (...args) {
@@ -7,20 +6,16 @@ function debounce(func, wait) {
     };
 }
 
-// --------- Translation function ---------
 function applyTranslations() {
-    // Mappings
     const headingMap = {
         "Join as a content editor to start managing this website": "管理者アカウント登録"
     };
-
     const labelMap = {
         "First Name": "氏名",
         "Last Name": "苗字",
         "Password": "パスワード",
         "Email": "メールアドレス"
     };
-
     const buttonDivMap = {
         "Back to live site": "編集画面を閉じる",
         "Select": "選択",
@@ -30,7 +25,6 @@ function applyTranslations() {
         "Save": "保存",
         "Create": "作成"
     };
-
     const textNodeMap = {
         "Not Published": "未公開",
         "Mon": "月曜日", "Tue": "火曜日", "Wed": "水曜日", "Thu": "木曜日", "Fri": "金曜日", "Sat": "土曜日", "Sun": "日曜日",
@@ -41,25 +35,21 @@ function applyTranslations() {
         "Yes, log me out": "ログアウト", "Cancel": "キャンセル"
     };
 
-    // Headings
     $(".w-editor-bem-Heading-h1").each(function () {
         const text = $(this).text();
         if (headingMap[text]) $(this).text(headingMap[text]);
     });
 
-    // Field labels
     $(".w-editor-bem-Field_Label_Text").each(function () {
         const text = $(this).text();
         if (labelMap[text]) $(this).text(labelMap[text]);
     });
 
-    // Button divs
     $("button div").each(function () {
         const text = $(this).text();
         if (buttonDivMap[text]) $(this).text(buttonDivMap[text]);
     });
 
-    // General text replacements
     $("div, button div, .w-editor-bem-Text, .w-editor-bem-EditSiteButton, .w-editor-expanding-label-inner, .w-editor-bem-Pane_Title, .w-editor-bem-Modal_Title, .w-editor-bem-Modal_MessageText")
         .contents()
         .filter(function () { return this.nodeType === Node.TEXT_NODE; })
@@ -71,7 +61,6 @@ function applyTranslations() {
             this.textContent = text;
         });
 
-    // Static adjustments
     $(".w-editor-bem-EditorMainMenu_Tab-account, .w-editor-bem-EditorMainMenu_Tab-help").remove();
     $(".w-editor-change-count").text("公開準備完了");
     $("#publish-option-text, #publish-draft-option-text").text("公開");
@@ -79,21 +68,18 @@ function applyTranslations() {
     $(".w-editor-bem-TextInput-search").attr("placeholder", "ページ一覧を検索");
     $(".w-editor-bem-Field_Hint").text("");
 
-    // Conditional removals
     $(".w-editor-bem-Text").each(function () {
         if ($(this).is(':contains("Orders")') || $(this).is(':contains("Ecommerce")') || $(this).is(':contains("Forms")')) {
             $(this).closest(".w-editor-bem-EditorMainMenu_Tab").remove();
         }
     });
 
-    // Special page headings
     $(".w-editor-bem-EditorPagesPane_Heading").each(function () {
         let t = $(this).text();
         t = (t !== "Static Pages") ? t.replace("Pages", "") : "固定ページ一覧";
         $(this).text(t);
     });
 
-    // Search and buttons
     $(".w-editor-bem-Pane_Actions div input").attr("placeholder", "ページを検索");
     $(".w-editor-bem-Pane_Actions div button div:contains('New')").text("新規アイテム追加");
     $(".w-editor-bem-Modal_Title:contains('Confirm')").text("ログアウト確認");
@@ -102,31 +88,42 @@ function applyTranslations() {
     console.log("Translations applied.");
 }
 
-// --------- Setup MutationObserver ---------
-const targetNode = document.body;
-const config = {
-    childList: true,
-    subtree: true,
-    characterData: true
-};
+function waitForEditorAndStart() {
+    const checkInterval = setInterval(() => {
+        if (document.querySelector(".w-editor-bem-EditorMainMenu_Tabs")) {
+            clearInterval(checkInterval);
 
-const debouncedApplyTranslations = debounce(applyTranslations, 300);
+            console.log("Editor loaded, starting observer...");
 
-const observer = new MutationObserver((mutationsList) => {
-    let shouldRun = false;
-    for (const mutation of mutationsList) {
-        if (mutation.type === 'childList' || mutation.type === 'characterData') {
-            shouldRun = true;
-            break;
+            const targetNode = document.body;
+            const config = {
+                childList: true,
+                subtree: true,
+                characterData: true
+            };
+
+            const debouncedApplyTranslations = debounce(applyTranslations, 300);
+
+            const observer = new MutationObserver((mutationsList) => {
+                let shouldRun = false;
+                for (const mutation of mutationsList) {
+                    if (mutation.type === 'childList' || mutation.type === 'characterData') {
+                        shouldRun = true;
+                        break;
+                    }
+                }
+                if (shouldRun) {
+                    debouncedApplyTranslations();
+                }
+            });
+
+            observer.observe(targetNode, config);
+
+            // Run once immediately
+            applyTranslations();
         }
-    }
-    if (shouldRun) {
-        debouncedApplyTranslations();
-    }
-});
+    }, 500);
+}
 
-// Start observing
-observer.observe(targetNode, config);
-
-// Run once on page load
-applyTranslations();
+// Start waiting
+waitForEditorAndStart();
