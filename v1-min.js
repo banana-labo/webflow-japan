@@ -4,13 +4,11 @@ function observeJoinPanel(callback) {
 
     if (panelRoot) {
         const observer = new MutationObserver((mutations) => {
-            mutations.forEach(() => {
-                callback();
-            });
+            callback();
         });
         observer.observe(panelRoot, { childList: true, subtree: true });
         console.log('✅ Observer attached to join panel');
-        callback(); // Run once initially
+        callback();
     } else {
         console.log('⏳ Waiting for join panel...');
         setTimeout(() => observeJoinPanel(callback), 1000);
@@ -27,16 +25,21 @@ function replaceJoinPanelTranslations() {
         'Password': 'パスワード',
         'Join now': '今すぐ参加',
         'Join as a user in the Editor to start managing this website': 'このサイトを管理するには、ユーザーとしてEditorに参加してください',
-        'You will only access the Editor for this website.': 'このサイトのEditorのみにアクセスします。',
-        'Log in to manage your site.': 'ログインしてサイトを管理する'
+        'You will only access the Editor for this website\.': 'このサイトのEditorのみにアクセスします。',
+        'Log in to manage your site\.': 'ログインしてサイトを管理する',
+        'Forgot it\?': 'リセット',
+        'Forgot your password\?': 'リセット',
+        'Log in': 'ログイン',
+        'Send Reset': 'リセット用',
+        'Return to Log In': 'ログイン画面に戻る'
     };
 
-    document.querySelectorAll('div, span, label, button').forEach(el => {
+    document.querySelectorAll('div, span, label, button, h1').forEach(el => {
         el.childNodes.forEach(node => {
             if (node.nodeType === Node.TEXT_NODE) {
                 let updatedText = node.textContent;
                 Object.keys(textNodeMap).forEach(key => {
-                    const regex = new RegExp(`\\b${key}\\b`, 'g');
+                    const regex = new RegExp(key);
                     if (regex.test(updatedText)) {
                         updatedText = updatedText.replace(regex, textNodeMap[key]);
                         console.log(`✅ Replaced join panel text: ${key} → ${textNodeMap[key]}`);
@@ -52,6 +55,9 @@ window.addEventListener('load', () => {
     observeJoinPanel(() => {
         replaceJoinPanelTranslations();
     });
+    setInterval(() => {
+        replaceJoinPanelTranslations();
+    }, 2000);
 });
 
 
