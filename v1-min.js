@@ -24,17 +24,19 @@ function replaceJoinPanelTranslations() {
         'Email': 'メールアドレス',
         'Password': 'パスワード',
         'Join now': '今すぐ参加',
-        'Join as a user in the Editor to start managing this website': 'このサイトを管理するには、ユーザーとしてEditorに参加してください',
-        'You will only access the Editor for this website\.': 'このサイトのEditorのみにアクセスします。',
+        'Join as a user in the Editor to start managing this website': '基本情報をご記入し、アカウント登録を行なってください。',
+        'You will only access the Editor for this website\.': '「今すぐ参加」をクリックすると、画面が編集画面に切り替わります。',
         'Log in to manage your site\.': 'ログインしてサイトを管理する',
         'Forgot it\?': 'リセット',
         'Forgot your password\?': 'リセット',
         'Log in': 'ログイン',
-        'Send Reset': 'リセット用',
+        'Send Reset': 'リセット用リンクを送信',
         'Return to Log In': 'ログイン画面に戻る'
     };
 
-    document.querySelectorAll('div, span, label, button, h1').forEach(el => {
+    document.querySelectorAll('div, span, label, button, h1, input[placeholder]').forEach(el => {
+        if (el.isContentEditable || el.contains(document.activeElement)) return;
+
         el.childNodes.forEach(node => {
             if (node.nodeType === Node.TEXT_NODE) {
                 let updatedText = node.textContent;
@@ -48,33 +50,17 @@ function replaceJoinPanelTranslations() {
                 node.textContent = updatedText;
             }
         });
+
+        if (el.placeholder) {
+            Object.keys(textNodeMap).forEach(key => {
+                if (el.placeholder.includes(key)) {
+                    el.placeholder = el.placeholder.replace(new RegExp(key), textNodeMap[key]);
+                    console.log(`✅ Replaced join panel placeholder: ${key} → ${textNodeMap[key]}`);
+                }
+            });
+        }
     });
 }
-
-window.addEventListener('load', () => {
-    observeJoinPanel(() => {
-        replaceJoinPanelTranslations();
-    });
-    setInterval(() => {
-        replaceJoinPanelTranslations();
-    }, 2000);
-});
-
-
-function translateEditButtonOnce() {
-    const editButton = document.querySelector('.w-editor-bem-EditSiteButton');
-    if (editButton) {
-        editButton.textContent = "管理画面へ";
-        console.log("✅ Translated Edit Site button");
-    } else {
-        console.log("⏳ Waiting for Edit Site button...");
-        setTimeout(translateEditButtonOnce, 1000);
-    }
-}
-
-window.addEventListener("load", () => {
-    translateEditButtonOnce();
-});
 
 function waitForEditorLoad(callback) {
     if (document.title.includes("Editor:")) {
@@ -101,7 +87,7 @@ function replaceEditorTranslations() {
         "保存 changes": "内容を保存",
         "images left": "枚アップロード可能",
         "Select an option": "選択してください",
-     　 "Save changes": "内容を保存",
+        "Save changes": "内容を保存",
         "Edit Alt Text": "代替テキスト編集",
         "Republish": "再公開",
         "Queue to publish": "公開待ちに追加",
@@ -112,17 +98,36 @@ function replaceEditorTranslations() {
         "You are about to close this item with unsaved changes\\. Would you like to save these changes before closing\\?": "保存されていない変更があります。閉じますか？",
         "Discard Changes": "変更を破棄",
         "Keep editing": "編集を続ける",
-        "Publish": "公開","Publish Now": "公開", "Save": "保存","Save Draft": "下書き保存", "Create": "作成",
-        "Delete": "削除", "Cancel": "キャンセル", "Duplicate": "複製", "Archive": "アーカイブする",
-        "Filter": "フィルター", "Select": "選択", "Deselect": "選択解除",
-        "Export": "エクスポート", "New": "新規", "Search": "検索",
-        "Title": "タイトル", "Status": "ステータス", "Created": "作成日", "Modified": "更新日",
+        "Publish": "公開",
+        "Publish Now": "公開",
+        "Save": "保存",
+        "Save Draft": "下書き保存",
+        "Create": "作成",
+        "Delete": "削除",
+        "Cancel": "キャンセル",
+        "Duplicate": "複製",
+        "Archive": "アーカイブする",
+        "Filter": "フィルター",
+        "Select": "選択",
+        "Deselect": "選択解除",
+        "Export": "エクスポート",
+        "New": "新規",
+        "Search": "検索",
+        "Title": "タイトル",
+        "Status": "ステータス",
+        "Created": "作成日",
+        "Modified": "更新日",
         "Are you sure you want to log out\\?": "本当にログアウトしますか？",
         "Yes, log me out": "はい、ログアウトします",
-        "Back to live site": "編集画面を閉じる", "View Site": "サイトを見る",
-        "Pages": "ページ", "Collections": "データベース", "Forms": "フォーム",
-        "Orders": "注文", "Ecommerce": "Eコマース",
-        "Name": "名前", "Slug": "スラッグ",
+        "Back to live site": "編集画面を閉じる",
+        "View Site": "サイトを見る",
+        "Pages": "ページ",
+        "Collections": "データベース",
+        "Forms": "フォーム",
+        "Orders": "注文",
+        "Ecommerce": "Eコマース",
+        "Name": "名前",
+        "Slug": "スラッグ",
         "Status: Not Published": "ステータス：未公開",
         "Status: Published": "ステータス：公開中",
         "Status: Draft": "ステータス：下書き",
@@ -155,6 +160,8 @@ function replaceEditorTranslations() {
     ];
 
     document.querySelectorAll(selectors.join(",")).forEach(el => {
+        if (el.isContentEditable || el.contains(document.activeElement)) return;
+
         el.childNodes.forEach(node => {
             if (node.nodeType === Node.TEXT_NODE) {
                 let updatedText = node.textContent;
@@ -169,7 +176,6 @@ function replaceEditorTranslations() {
             }
         });
 
-        // Also check placeholders
         if (el.placeholder) {
             Object.keys(textNodeMap).forEach(key => {
                 if (el.placeholder.includes(key)) {
@@ -188,4 +194,11 @@ window.addEventListener("load", () => {
         }, 1000);
         console.log("✅ Running replaceEditorTranslations every 1000ms on Editor page");
     });
+
+    observeJoinPanel(() => {
+        replaceJoinPanelTranslations();
+    });
+    setInterval(() => {
+        replaceJoinPanelTranslations();
+    }, 2000);
 });
