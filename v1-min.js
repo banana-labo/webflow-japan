@@ -1,4 +1,5 @@
 // 20250513
+// Observe the join panel for dynamic content changes (e.g., when switching between login, join, reset views)
 function observeJoinPanel(callback) {
     const panelSelector = '.w-reset.w-editor-bem-EditorApp_Panel';
     const panelRoot = document.querySelector(panelSelector);
@@ -16,6 +17,7 @@ function observeJoinPanel(callback) {
     }
 }
 
+// Translate join/login panel elements to Japanese
 function replaceJoinPanelTranslations() {
     console.log('🔔 Running replaceJoinPanelTranslations');
 
@@ -63,6 +65,7 @@ function replaceJoinPanelTranslations() {
     });
 }
 
+// Wait for Editor pages to be fully loaded before translating repeatedly
 function waitForEditorLoad(callback) {
     if (document.title.includes("Editor:")) {
         console.log("✅ Detected Editor title, starting interval");
@@ -73,6 +76,7 @@ function waitForEditorLoad(callback) {
     }
 }
 
+// Translate generic Webflow Editor interface elements to Japanese
 function replaceEditorTranslations() {
     console.log("🔔 Running replaceEditorTranslations");
 
@@ -188,6 +192,7 @@ function replaceEditorTranslations() {
     });
 }
 
+// Kick off translations on load for Editor view and Join/Login view
 window.addEventListener("load", () => {
     waitForEditorLoad(() => {
         setInterval(() => {
